@@ -1,0 +1,224 @@
+Version 1.12 Updates:
+ESA Hype!
+Night% is now called Eclipse%.
+Home% difficulty increased from 3 to 4.
+Rave% difficulty increased from 2 to 3.
+SuddenCarDeath% can no longer trigger during Cherry Poppers.
+
+
+Version 1.11 Updates:
+The bounce effects (both timed and permanent) no longer break half of the physics in the game. 
+The permanent effect Bounce% is not as bouncy as before.
+The log now records YYYY-MM-DD in addition to the time.
+Normal difficulty is now called medium.
+Fixed a bug causing specific timed effects to trigger during certain permanent effects. (e.g. RainbowCar% activating despite ImTheInvisibleDriver% being an active permanent effect)
+
+
+Version 1.1 Updates:
+A new effect type, Static effects, has been added. All static effects are active, independent of user settings.
+CrazyCones% added as a static effect.
+GhostTown% added as a timed effect.
+HighDPI% added as a timed effect.
+LowDPI% added as a timed effect.
+Pacifist% added as a timed effect.
+BeamMeUpScotty% added as a timed effect.
+Vampire% added as a permanent effect.
+The way timed effects are activated and deactivated has been overhauled completely. 
+	They are now less error-prone, especially when loading a save or starting a new game.
+	Efficiency has been improved, especially when dealing with a large number of effects.
+The way permanent effects are activated and deactivated has been overhauled completely. 
+	They now always disable correctly when loading a save or starting a new game. 
+	Several issues that would crash the game when loading a save are now solved.
+	Bounce% will no longer cause a bug causing Tommy to walk weirdly (sort of diagonally) after loading a game. This bug also potentially crashed the game.
+	MissionSuicide% will no longer be able to trigger after loading a save.
+The way the permanent effects are chosen has been redesigned. You can now choose the difficulty (Easy, Normal, Hard) which will affect the number/difficulty of the permanent effects chosen.
+The order in which timed effects are activated is now fully dependent on the seed, meaning everyone with the same version and the same seed will have the same order of effects.
+RainbowCar% will no longer trigger if the permanent ImTheInvisibleDriver% is active.
+Night% now works correctly on the Steam version. (Previously it turned the green scanlines on instead of changing the time)
+Rave% and Home% (the teleportation effects) should no longer trigger during actions such as entering a car, which would load the interior but not teleport the player.
+PitStop%: For cars and bikes, the effect will now remove the wheels (and restore them at the end of the effect) instead of nullifying your speed.
+DrunkCam% has been overhauled internally. It will now fit in better with the other effects in terms of length, especially with sånic mode enabled.
+PitStop% now lasts 5 seconds instead of 2.
+SuddenCarDeath% is now 4x less likely when Sanic mode is enabled.
+SuddenCarDeath% will now be skipped if the car health is already very low.
+All Wanted% effects are now 2x less likely when Sanic mode is enabled.
+ImTheInvisibleDriver% (permanent effect) difficulty increased from 2 to 3.
+Polaris% difficulty increased from 1 to 3.
+Interior% can no longer be canceled by starting/finishing missions.
+Using quicksave no longer advances the time.
+Sånic mode can no longer be enabled if timed effects are disabled (it wouldn't have any effect anyway).
+If both permanent and timed effects are turned off the taskbar will no longer contain an icon for the non-existant output window.
+Changed what information is stored in the log.
+A debugger has been added to provide a detailed debug log about the game in addition to the Chaos% log.
+Efficiency is improved.
+Fixed a bug which caused the timed effects to stop triggering.
+Added comments to the source file to make the code more clear.
+The welcome screen now shows which version of the program is running.
+Fixed a bug in quicksave which disabled the check if a game was started before saving.
+Because of compatibility issues, the program will detect if Avast is installed, in which case the auto-updater will NOT work.
+If the program has issues accessing the game, it will try to restart with admin privileges which often solves the problem.
+
+
+Version 1.02 Updates:
+Improved quicksave. It will now immediately save to a separate slot if you press F5. You can only load the file from the main menu after the game has crashed, by pressing F5.
+
+
+Version 1.01 Updates:
+Night% will now set the ingame time to 2 minutes to midnight.
+The teleportation effects are much less frequent if Sånic mode is enabled.
+Removed FrameLimiter420% and FrameLimiter120%.
+FrameLimiter15% difficulty increased from 2 to 4.
+FrameLimiter60% difficulty increased from 2 to 4.
+
+
+Version 1.0 Updates
+Added a checkbox to disable timed effects. Mainly useful for testing, but also opens up the possibility of permanent-effects-only gameplay.
+Added a checkbox to enable Sånic mode. In this mode effects will switch 10x more often.
+Added AngryDrivers% as a permanent effect.
+Added Bounce% as a permanent effect.
+Added ImTheInvisibleDriver% as a permanent effect.
+Added Rayman% as a permanent effect.
+Added NoMagicalBackpack% as a  permanent effect.
+Added Night% as a timed effect.
+Added AstralProjection% as a timed effect.
+Added PitStop% as a timed effect.
+Added Home% as a timed effect.
+Added Rave% as a timed effect.
+A right-click on the seed selection window or the output window will now show a context menu allowing you to restart or close the program. You can also open the readme from this menu (an option to open the readme has also been added to the tray menu).
+Polaris% now triggers less often.
+Polaris% now lasts 30 seconds instead of 60.
+Polaris% will now only trigger during missions.
+ZeroGravity% now lasts 10 seconds instead of 5.
+ZeroDrawDistance% now lasts 10 seconds instead of 5.
+ImTheInvisibleDriver% now lasts twice as long if Flintstone% is active.
+CrazyCarCollision% has been removed as a separate effect and is now combined with AngryDrivers% instead.
+QuarterDrawDistance% weight reduced from 2 to 1.
+DoubleGameSpeed% weight increased from 1 to 2.
+Wanted4% difficulty decreased from 4 to 3.
+Wanted5% difficulty decreased from 5 to 4.
+Wanted6% difficulty decreased from 6 to 5.
+DoubleGravity% difficulty increased from 1 to 2.
+DoubleGameSpeed% difficulty increased from 1 to 2.
+AngryDrivers% difficulty increased from 1 to 2.
+LetsTakeABreak% difficulty decreased from 2 to 1.
+FrameLimiter60% difficulty increased from 1 to 2.
+FrameLimiter120% difficulty increased from 2 to 3.
+FrameLimiter420% difficulty increased from 3 to 4.
+NoBounce% difficulty increased from 1 to 2.
+SuddenCarDeath% difficulty decreased from 2 to 1.
+HalfDrawDistance% difficulty increased from 1 to 2.
+Removed arbitrary delay between timed effects.
+If the frame limiter is turned off in the settings, it will now be automatically enabled while Chaos% is running.
+It is no longer possible to use quicksave to avoid MissionSuicide%
+Quicksave can now only be used if you are not doing a special animation (such as jumping, entering a car etc) to avoid potential crashes/save corruption.
+Quicksave will now only trigger if the intro cutscene is finished to avoid crashes/save corruption.
+Failing or completing a mission no longer deactivates DrunkCam%.
+The time it takes for DrunkCam% to activate and deactivate is now counted as part of the duration.
+The time it takes for Lag% to activate is now counted as part of the duration.
+Fixed the Wanted% effects which were wrongly disabled during all missions instead of just during Distribution.
+Some small changes in the text on various windows.
+Effect names are now followed by a % sign in the output window.
+Old effects are now properly disabled when loading a save or starting a new game.
+Fixed a bug which caused the program to try and identify GTA 3 as VC.
+Fixed rare softlock chances in LetsTakeABreak%, RandomFall% and PhoneCall%
+Crash when deactivating LetsTakeABreak% fixed. (Caused by the game using resources in an unintended way, mainly in cutscenes but possibly at other moments as well.)
+Crash when deactivating Flintstone% fixed. (Same as LetsTakeABreak%)
+The log will now also report which seed you used, as well as which version of the program you are using.
+The flag EffectActive is now set just before activating the effect instead of just after. This will improve reliability of deactivating effects when closing the program, especially on effects with a long activation time such as Drunk% and Lag%.
+Fixed a bug which caused effects to loop indefinitely.
+The VCGetMissionName() function which is used in some effects is now much more efficient.
+Created the VCGetVehicleName() function for use in future effects.
+
+
+Version 0.91 Updates
+Fixed NoBounce%, Bounce% and BouncyBounce%
+NoBounce% increases the spring damping by a smaller amount than before, so it should affect vehicle speed less.
+Flintstone% difficulty increased from 1 to 2.
+
+
+Version 0.9 Updates
+SuddenCarDeath% added.
+Interior% added.
+Polaris% added.
+Mirage% added.
+ZeroDrawDistance% added.
+EighthDrawDistance% added.
+QuarterDrawDistance% added.
+HalfDrawDistance% added.
+DoubleDrawDistance% added.
+NoBounce% added.
+Bounce% added.
+BouncyBounce% added.
+NoRight% now works on the steam version.
+FrameLimiter420% difficulty increased from 2 to 3.
+Drunk% difficulty reduced from 2 to 1 again.
+The output window will no longer show text related to permanent effects if no permanent effects are active.
+The output window will now remove the timed effect name as soon as the effect ends instead of waiting until the next effect is started.
+Immersion% difficulty raised from 4 to 5.
+
+
+Version 0.82 Updates
+Initial version of quicksave implemented. Press F5 to open up the save menu (only when not in mission, on foot).
+Flintstone% now triggers every 5 seconds, so cutscenes, pay and spray etc can be triggered as long as you time it somewhat. This also adds the extra difficulty of the control scheme not changing immediately when getting in a car.
+The program now creates a log which keeps track of effects triggering and when the game crashes. This should make it easier to fix stuff. Be sure to send me the logs if you encounter crashes.
+Effects now have a weight in addition to difficulty. This will be used to make effects trigger more often. An effect with weight N will be added to the effect list N times, so the chance that it is picked will increase.
+Drunk% difficulty increased from 1 to 2.
+RandomFall% now has a weight of 2.
+Flintstone% will now automatically be cancelled if the program is shut down (i.e. no need to exit/enter car to cancel it)
+Wanted% will no longer trigger during Distribution (Cherry Poppers).
+MissionSuicide% will check for mission completion more reliably so it should actually trigger every mission. It should also give the game enough time to end the mission properly to reduce crashing.
+QuarterGameSpeed% length halved.
+ZeroGravity% now lasts 5 seconds instead of 3.
+ToFlatTireOrNotToFlatTire% now has double the amount of time between inflating/deflating the tires.
+ToFlatTireOrNotToFlatTire% now restores your tires when it ends.
+FlatTire% only triggers once instead of continuously for its duration.
+NoRight% will not trigger anymore when not in a vehicle or when in a boat/on a bike.
+Fixed the updater not showing a description of the update.
+ImTheInvisibleDriver% difficulty lowered from 3 to 2.
+LetsTakeABreak% difficulty lowered from 3 to 2.
+There is now an additional 1 second delay between effects. Hopefully this will improve stability.
+There is now an additional 0.5 second delay before the script closes. Hopefully this will make disabling the effects more consistent.
+
+
+Version 0.81 Updates
+The formula determining the number of permanent effects has been reworked so getting a high number of permanent effects is much less likely.
+The program will now correctly pick only one permanent effect per category (e.g. Flintstone% and NoDriveBy% can't be enabled at the same time)
+The invalid seed error message now includes the length a valid seed should be.
+Immersion% difficulty raised from 2 to 4.
+
+
+Version 0.8 Updates
+RandomFall% added.
+LetsTakeABreak% added.
+PhoneCall% added.
+ImTheInvisibleDriver% added.
+FrameLimiter15%, FrameLimiter60%, FrameLimiter120% and FrameLimiter420% added.
+Code optimizations save 15 KB.
+When a new update is found, the updater will show a brief description of the changes.
+Text smoothing was not correctly disabled, this has been fixed.
+The updater will now be deleted after updating.
+PackageHealth% now sets max health to twice the amount of packages collected (instead of just package amount without a multiplier).
+PackageHealth% will now correctly set the max health to 200 if closing the program on a 100% completed save.
+The slow down on Lag% will now last slightly shorter.
+FlatTire% now lasts 10 seconds instead of 30.
+FlatTire% difficulty raised from 1 to 2.
+Immersion% difficulty raised from 1 to 2.
+HalfGameSpeed% difficulty raised from 1 to 2.
+A new effect will now trigger (5*TargetWantedLevel) seconds after a Wanted% effect instead of after 1 second.
+
+
+Version 0.72 Updates:
+From now on, a readme will be included in every release.
+The text "Chaos%" will now appear in the bottom right of the game window (where the wasted/busted text normally appears) to clearly identify that the program is running. (The text is fairly prominent atm so I'll look into making it smaller.)
+The program will now reset itself correctly when starting a new game.
+The cycling is no longer broken (whoops!), so expect to see a lot more variation in effects.
+The currently activated timed effect output will now update to a blank state if the game is closed or a new game is started.
+Text smoothing is now disabled for all of the program's windows.
+The number of effects is now calculated using a more difficult formula so it isn't immediately obvious from the seed.
+
+
+Version 0.71 Updates:
+The output window can now be captured by XSplit and OBS.
+It is no longer possible to reset the game speed by actions such as dying or doing an unique jump.
+The same effect category cannot trigger twice in a row any more.
+The Quadruple speed effect is now correctly disabled since it is not yet functional.

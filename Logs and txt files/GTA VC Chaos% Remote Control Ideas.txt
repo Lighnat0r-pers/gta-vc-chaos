@@ -1,0 +1,23 @@
+Keep in mind that this will activate for everyone running the program. A solution is to make the program generate a random "ID" code when starting and showing that in the output screen.
+Make sure the program checks if the effect name is new or it was deactivated previously to avoid accidental looping when forgetting to disable the effect.
+Alternative: add the code to the program itself, maybe in external functions, this is be safer/more stable but perhaps less adaptable. The effect name would then be just a reference to something already in the code. This is probably easier to get right.
+It would be amazing if this could be community directed: make a web page where people can select an effect (limit it to 1 effect every so often ofc). This would probably work well with the ID code which you'd have to input on the site in order to reach the "control panel". 
+Make sure you as a player can set if you want it enabled or not.
+
+Remote Control .Ini:
+
+Remote Control Active=1
+Remote Control Max Duration=[Time in ms] ; Maybe make this custom per effect, with a standard value.
+Remote Control Effect=[NameHere]
+
+Remote Control [Name Here]=[Code Here] ; Putting the code in the program itself instead of here is probably better.
+
+
+
+
+A program posts an ID to the web page.
+Web page create a dedicated page for that ID, with a list of items for a user to choose from.
+The web page keeps a queue with all the chosen items, a user can only choose once every 10 minutes.
+The program polls the queue and get an item from it (usually the first) every 30 seconds.
+The web page removes the first item from the queue and shifts everything else forward (i.e. 2nd item becomes 1st etc.).
+

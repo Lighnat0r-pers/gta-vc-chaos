@@ -1,0 +1,13 @@
+bestand gegenereerd op het moment dat mensen op submit klikken op de site.
+dat wordt opgevraagd door chaos%
+xml/ini bestand
+
+Caching problemen: voeg timestamp toe om te voorkomen dat een oude versie gebruikt wordt.
+
+genereren met een scriptje bijv. perl of een andere taal.
+
+Probleem als meerdere mensen op hetzelfde moment submitten.
+
+III: 25
+VC:  37
+SA:  46

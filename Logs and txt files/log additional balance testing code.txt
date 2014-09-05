@@ -1,0 +1,17 @@
+For key in TimedEffectsArray
+
+%key%ActivatedAmount = 0
+
+
+|
+|
+|
+|
+|
+|
+|
+|
+
+
+In activation code:
+%TimedEffectName%ActivatedAmount += 1
