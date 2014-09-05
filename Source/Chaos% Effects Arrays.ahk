@@ -153,6 +153,10 @@ TimedEffectName := "DrunkCam"
 TimedEffectCategory := "Visuals"
 TimedEffectDifficulty = 1
 gosub %CurrentLoopCode%
+TimedEffectName := "ExtremeDrunkCam"
+TimedEffectCategory := "Visuals"
+TimedEffectDifficulty = 4
+gosub %CurrentLoopCode%
 TimedEffectName := "Interior"
 TimedEffectCategory := "Visuals"
 TimedEffectDifficulty = 2
@@ -244,7 +248,7 @@ TimedEffectDifficulty = 2
 gosub %CurrentLoopCode%
 TimedEffectName := "Polaris"
 TimedEffectCategory := "Traffic"
-TimedEffectDifficulty = 3
+TimedEffectDifficulty = 4
 gosub %CurrentLoopCode%
 TimedEffectName := "GhostTown"
 TimedEffectCategory := "Traffic"
@@ -275,6 +279,11 @@ gosub %CurrentLoopCode%
 ; Category PlayerGraphics
 TimedEffectName := "AstralProjection"
 TimedEffectCategory := "PlayerGraphics"
+TimedEffectDifficulty = 3
+gosub %CurrentLoopCode%
+; Category PlayerPhysics
+TimedEffectName := "Monstertruck"
+TimedEffectCategory := "PlayerPhysics"
 TimedEffectDifficulty = 3
 gosub %CurrentLoopCode%
 ; Category PlayerAnimations
