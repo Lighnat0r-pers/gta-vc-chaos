@@ -39,7 +39,7 @@ Memory(Type=3,Param1=0,Param2=0,Param3=0,Param4=0)
 			Loop %Param2%
 				Result += *(&MVALUE + A_Index-1) << 8*(A_Index-1)
 			If (Param3 = "Float") ; Write a float value.
-				Result := HexToFloat(Result)
+				Result := (1-2*(Result>>31)) * (2**((Result>>23 & 255)-150)) * (0x800000 | Result & 0x7FFFFF)
 			Return Result
 		}
 		Return !ProcessHandle ? "Handle Closed: " Closed : "Fail"
@@ -72,7 +72,12 @@ Memory(Type=3,Param1=0,Param2=0,Param3=0,Param4=0)
 		Else
 		{
 			If (Param4 = "Float") ; Write a float value.
-				Param2 := FloatToHex(Param2)
+			{
+				form := A_FormatInteger
+				SetFormat Integer, HEX
+				Param2 := DllCall("MulDiv", Float, Param2, Int,1, Int,1, UInt)
+				SetFormat Integer, %form%
+			}
 			Param3 := ((!Param3) ? 4 : Param3) ; If length is left out it defaults to 4
 			If (ProcessHandle) && DllCall("WriteProcessMemory","UInt"
 			,ProcessHandle,"UInt",Param1,"Uint*",Param2,"Uint",Param3,"Uint",0)
