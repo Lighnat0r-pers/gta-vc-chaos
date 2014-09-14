@@ -236,7 +236,7 @@ return
 ; ########################################## EXTREME DRUNK CAM #########################################
 ; ######################################################################################################
 
-ExtremeDrunkCamData:
+XtremeDrunkCamData:
 DrunkCameraIntensityAddress := 0x00983B38+VersionOffset
 DrunkCameraIntensityOriginal := 0
 DrunkCameraIntensityTarget := 40
@@ -244,12 +244,12 @@ DrunkCameraIntensityTarget := 40
 %TimedEffectName%ContinuouslyActivate = 1
 return
 
-ExtremeDrunkCamActivate:
+XtremeDrunkCamActivate:
 if Memory(3, DrunkCameraIntensityAddress, 4, "Float") != DrunkCameraIntensityTarget
 	Memory(4, DrunkCameraIntensityAddress, DrunkCameraIntensityTarget, 4, "Float")
 return
 
-ExtremeDrunkCamDeactivate:
+XtremeDrunkCamDeactivate:
 if Memory(3, DrunkCameraIntensityAddress, 4, "Float") != DrunkCameraIntensityOriginal
 	Memory(4, DrunkCameraIntensityAddress, DrunkCameraIntensityOriginal, 4, "Float")
 return

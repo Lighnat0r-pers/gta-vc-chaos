@@ -159,7 +159,7 @@ TimedEffectName := "DrunkCam"
 TimedEffectCategory := "GUIVisuals"
 TimedEffectDifficulty = 2
 gosub %CurrentLoopCode%
-TimedEffectName := "ExtremeDrunkCam"
+TimedEffectName := "XtremeDrunkCam"
 TimedEffectCategory := "GUIVisuals"
 TimedEffectDifficulty = 4
 gosub %CurrentLoopCode%
@@ -397,7 +397,7 @@ TimedEffectName := "Cubicle"
 TimedEffectCategory := "Teleport"
 TimedEffectDifficulty = 4
 gosub %CurrentLoopCode%
-TimedEffectName := "InTheArmy"
+TimedEffectName := "InTheArmyNow"
 TimedEffectCategory := "Teleport"
 TimedEffectDifficulty = 4
 gosub %CurrentLoopCode%

@@ -56,7 +56,7 @@ If (IsLabel("DebugFunctions") AND A_IsCompiled != 1)
 	gosub DebugFunctions
 ; Configure the auto updater. The auto updater only triggers if the program is compiled, otherwise 
 ; the program will go to the create arrays subroutine immediately, skipping the auto updater.
-CurrentVersion = 1.21
+CurrentVersion = 1.22
 VersionURL := "http://pastebin.com/download.php?i=pc9QbQCK"
 ProgramName = Chaos
 gosub FileList
