@@ -23,6 +23,9 @@ Created by Lighnat0r
 Contact me at Lighnat0r@gmail.com for any questions, bugs, suggestions or find me in the speedrunslive.com #gta irc channel. You can also message me on Twitch (www.twitch.tv/Lighnat0r)
 For the source code and other stuff, check out the GitHub for Chaos% at https://github.com/Lighnat0r/gta-vc-chaos
 
+Version 1.21 Updates:
+Fixed the generation of the permanent effects.
+
 Version 1.2 Updates:
 GTA Marathon HYPE!
 ExtremeDrunkCam% added as a timed effect.
@@ -57,6 +60,7 @@ NoBounce% difficulty increased from 2 to 3.
 List of effects:
 Static:
 	CrazyCones%			(Cones are bouncy)
+	NoReplay%			(Replays are disabled) 
 
 Permanent:
 [4]	PackageHealth% 			(Your max health equals twice the amount of packages collected)

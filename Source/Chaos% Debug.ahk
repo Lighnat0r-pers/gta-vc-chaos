@@ -69,7 +69,6 @@ return
 DebugOutputSeedList:
 If PermanentEffectsEnabled !=
 	return
-;DifficultyLimit := 7
 Loop %SeedValidLength%
 	NumberOfSeeds .= 9
 Loop %NumberOfSeeds%
@@ -78,8 +77,6 @@ Loop %NumberOfSeeds%
 	Amount = 0
 	PermanentEffectsActiveArray := {}
 	Seed := A_Index
-	; Set this back to undefined because that is what it'd normally be when picking the first effect, now it'd carry over from the previous seed.
-	PermanentEffectsAvailable := 
 	gosub DecodeSeed
 	For Index, Value in PermanentEffectsActiveArray
 	{

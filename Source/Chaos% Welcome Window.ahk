@@ -152,7 +152,7 @@ if Seed = 0
 ; arbitrary mathematical operation on the seed.
 PermanentEffectsEnabled = 1
 DifficultySum = 0
-RequiredEffect := Abs(Floor(((((Tan(Sin(Abs((((CurrentVersion+2)*Seed+5426)/19-(114+Seed))*3)+34*PermanentEffectsAvailable+3)+37)+348)*DifficultyLimit*2)+(13*SeedValidLength))+160)/6-RefreshRate*43+StandardTimeBetweenEffects*StandardTimeBetweenEffects))
+RequiredEffect := Abs(Floor(((((Tan(Sin(Abs((((CurrentVersion+2)*Seed+5426)/19-(114+Seed))*3)+34*SeedValidLength+3)+37)+348)*DifficultyLimit*2)+(13*SeedValidLength))+160)/6-RefreshRate*43+StandardTimeBetweenEffects*StandardTimeBetweenEffects))
 TempPermanentEffectsArray := PermanentEffectsArray.Clone()
 TempPermanentCategoriesArray := PermanentCategoriesArray.Clone()
 TempPermanentDifficultiesArray := PermanentDifficultiesArray.Clone()

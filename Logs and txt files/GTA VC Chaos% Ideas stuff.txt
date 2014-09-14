@@ -462,4 +462,4 @@ Maybe later: add changed limitation constants based on permanent effects
 active.
 
 
-
+Auto update doesnt set window owner correctly.
