@@ -1,3 +1,33 @@
+Version 1.2 Updates:
+GTA Marathon HYPE!
+ExtremeDrunkCam% added as a timed effect.
+Monstertruck% added as a timed effect.
+Golf% added as a timed effect.
+ImOuttaHere% added as a timed effect.
+Cubicle% added as a timed effect.
+InTheArmyNow% added as a timed effect.
+TimeLapse% added as a timed effect.
+FullHeal% added as a timed effect.
+FullArmour% added as a timed effect.
+TaxiJump% added as a timed effect.
+TaxiJump% added as a permanent effect.
+Marathon% added as a permanent effect.
+DrunkCam% moved to a new category and difficulty increased from 1 to 2.
+Fixed quicksave: no more easy abuse! The save automatically created by this is now only accessible after a game crash as intended.
+Lag% now changes between the game speeds at a pseudorandom rate instead of fixed.
+Timed effects are now disabled when player is uncontrollable (eg. in cutscenes).
+Timed effects that have the same category as an active permanent effect are now automatically skipped.
+Advanced options are now hidden by default.
+The output window now shows the difficulty level.
+Big improvement of the permanent effect generator, so the seeds are much more varied now.
+Fixed bugs for V1.1 with changing ingame clock and checking if the game is faded out.
+Teleport effects duration increased from 5 seconds to 10 seconds.
+PitStop% duration decreased from 5 seconds to 2.5 seconds.
+Polaris% difficulty increased from 3 to 4.
+SuddenCarDeath% difficulty increased from 1 to 2.
+Mirage% difficulty increased from 1 to 2.
+NoBounce% difficulty increased from 2 to 3.
+
 Version 1.12 Updates:
 ESA Hype!
 Night% is now called Eclipse%.

@@ -1,0 +1,27 @@
+Description of CPlayerPed::SetRealMoveAnim(void)
+
+Get player clumps associated with anims.
+
+Based on some flag in CPlayer+152h it resets the animations.
+
+Get more player clumps
+
+Check for some things related to the clumps and set some things related to the clumps.
+
+RestoreHeadingRate for the player
+
+Check if the player has stamina and some other stuff.
+
+call TestSphereAgainstSectorList (what is this?) related to current/previous walking animation for weapon.
+
+check if already running/sprinting (?), if not start animation.
+
+Bunch of animation stuff.
+
+Check if player is sprinting and check if player has stamina
+
+Make the player stand if no stamina (?)
+
+Check if sprinting again. Compare player speed against some float, do stuff
+
+

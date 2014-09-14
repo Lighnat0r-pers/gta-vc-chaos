@@ -59,10 +59,8 @@ TireRearRightOffset := 0x2A8
 BikeTireFrontOffset := 0x32C
 BikeTireRearOffset := 0x32D
 %TimedEffectName%Time := 10000
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4)) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
-if Memory(3, VehicleTypeAddress, 1) = 1 ; Check if player is in a boat
-	SkipTimedEffect = 1
+gosub CheckOnFoot
+gosub CheckInBoat
 return
 
 
@@ -112,10 +110,8 @@ TireRearRightOffset := 0x2A8
 BikeTireFrontOffset := 0x32C
 BikeTireRearOffset := 0x32D
 %TimedEffectName%ContinuouslyActivate = 1
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4) OR Memory(3, PlayerStatusAddress, 1) != 50) ; Check if player is not in a vehicle, double check for avoiding softlocks in cutscenes
-	SkipTimedEffect = 1
-if Memory(3, VehicleTypeAddress, 1) = 1 ; Check if player is in a boat
-	SkipTimedEffect = 1
+gosub CheckOnFoot
+gosub CheckInBoat
 return
 
 
@@ -310,17 +306,9 @@ else
 	MaxCrimeRatingAddress := 0x006910DC
 }
 %TimedEffectName%Time := 5000 * TargetWantedLevel ; The length of the effect depends on the target wanted level.
-if (Memory(3, OnMissionAddress, 1) = 1) ; Don't trigger wanted% during cherry poppers
-{
-	If (VCGetMissionName() = "Distribution")
-		SkipTimedEffect = 1
-}
-if SanicModeEnabled = 1
-{
-	SanicModeAdditionalDifficulty := GetPseudoRandomValueUpTo(2)
-	if SanicModeAdditionalDifficulty != 1
-		SkipTimedEffect = 1
-}
+SanicModeAdditionalDifficulty := 2
+gosub CheckDuringDistribution
+gosub CheckSanicExtraDifficulty
 return
 
 Wanted1Activate:
@@ -402,7 +390,6 @@ if VersionOffset = -4088
 	GravityAddress := 0x0068E5F8
 else 
 	GravityAddress := 0x0068F5F0
-; No restrictions so return immediately
 return
 
 BeamMeUpScottyActivate:
@@ -464,7 +451,6 @@ GameSpeedGenericData:
 SpeedOriginal := 1.0
 GameSpeedAddress := 0x0097F264+VersionOffset
 %TimedEffectName%ContinuouslyActivate = 1
-; No restrictions so return immediately
 return
 
 QuarterGameSpeedActivate:
@@ -523,8 +509,7 @@ else
 OriginalAddedSpeed := 10
 TargetAddedSpeed := 100
 OriginalCollision := 16307 ; Short
-If (IsInArray(PermanentEffectsActiveArray, "AngryDrivers")) ; Check if the permanent effect "AngryDrivers" is active
-	SkipTimedEffect = 1
+gosub CheckAngryDriversPermanent
 return
 
 AngryDriversActivate:
@@ -551,10 +536,8 @@ if VersionOffset = -4088
 else
 	NoRightAddress := 0x0069A6A8
 OriginalValue := -1.0
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4)) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
-if Memory(3, VehicleTypeAddress, 1) != 0 ; Check if player is in anything other than a car (heli counts as car unfortunately)
-	SkipTimedEffect = 1
+gosub CheckOnFoot
+gosub CheckVehicleNotCar
 return
 
 NoRightActivate:
@@ -574,10 +557,8 @@ RainbowCarData:
 VehiclePrimaryColourOffset := 0x1A0
 VehicleSecondaryColourOffset := 0x1A1
 %TimedEffectName%ContinuouslyActivate = 1
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4)) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
-If (IsInArray(PermanentEffectsActiveArray, "ImTheInvisibleDriver")) ; Check if the permanent effect "ImTheInvisibleDriver" is active
-	SkipTimedEffect = 1
+gosub CheckOnFoot
+gosub CheckImTheInvisibleDriverPermanent
 return
 
 
@@ -607,10 +588,8 @@ return
 ; This effect triggers the falling animation for the player, as if Tommy tripped.
 RandomFallData:
 %TimedEffectName%Time := 5000
-if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4)) ; Check if player is in a vehicle
-	SkipTimedEffect = 1
-if (Memory(3, PlayerStatusAddress, 1) != 1) ; Reduces softlock chance, this is probably too limited though
-	SkipTimedEffect = 1
+gosub CheckInVehicle
+gosub CheckOnFootNormalStatus
 return
 
 
@@ -631,8 +610,7 @@ return
 ; Prevents the player from controlling Tommy for a short period of time.
 LetsTakeABreakData:
 %TimedEffectName%Time := 2500
-if (Memory(3, PlayerStatusAddress, 1) != 1 AND Memory(3, PlayerStatusAddress, 1) != 50) ; This should prevent softlocks
-	SkipTimedEffect = 1
+gosub CheckNormalStatus
 return
 
 
@@ -668,10 +646,8 @@ return
 ; even though his actions are no longer limited. Actions such as entering a car disable the stance.
 PhoneCallData:
 %TimedEffectName%Time := 5000
-if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4)) ; Check if player is in a vehicle
-	SkipTimedEffect = 1
-if (Memory(3, PlayerStatusAddress, 1) != 1) ; Reduces softlock chance, this is probably too limited though
-	SkipTimedEffect = 1
+gosub CheckInVehicle
+gosub CheckOnFootNormalStatus
 return
 
 
@@ -692,10 +668,8 @@ return
 EnterCarData:
 %TimedEffectName%Time := 5000
 %TimedEffectName%ContinuouslyActivate = 1
-if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4)) ; Check if player is in a vehicle
-	SkipTimedEffect = 1
-if (Memory(3, PlayerStatusAddress, 1) != 1) ; Reduces softlock chance, this is probably too limited though
-	SkipTimedEffect = 1
+gosub CheckInVehicle
+gosub CheckOnFootNormalStatus
 return
 
 
@@ -721,10 +695,8 @@ CarFlagsOffset := 0x52
 If (IsInArray(PermanentEffectsActiveArray, "Flintstone")) ; Check if the permanent effect "Flintstone" is active
 	%TimedEffectName%Time := StandardTimeBetweenEffects*2
 %TimedEffectName%ContinuouslyActivate = 1
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4)) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
-If (IsInArray(PermanentEffectsActiveArray, "ImTheInvisibleDriver")) ; Check if the permanent effect "ImTheInvisibleDriver" is active
-	SkipTimedEffect = 1
+gosub CheckOnFoot
+gosub CheckImTheInvisibleDriverPermanent
 return
 
 
@@ -821,22 +793,11 @@ SuddenCarDeathData:
 CarHealthOffset := 0x204
 CarHealthTarget := 250.0
 %TimedEffectName%Time := 10000
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4)) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
-CarHealthAddress := Memory(5, CarPointer, CarHealthOffset)
-if (Memory(3, CarHealthAddress, 4, "Float") < 500.0) ; Only activate if the vehicle has more than 1/3 of its health left.
-	SkipTimedEffect = 1
-if SanicModeEnabled = 1
-{
-	SanicModeAdditionalDifficulty := GetPseudoRandomValueUpTo(4)
-	if SanicModeAdditionalDifficulty != 1
-		SkipTimedEffect = 1
-}
-if (Memory(3, OnMissionAddress, 1) = 1) ; Don't trigger during cherry poppers
-{
-	If (VCGetMissionName() = "Distribution")
-		SkipTimedEffect = 1
-}
+SanicModeAdditionalDifficulty := 4
+gosub CheckOnFoot
+gosub CheckVehicleLowHealth
+gosub CheckSanicExtraDifficulty
+gosub CheckDuringDistribution
 return
 
 
@@ -872,10 +833,9 @@ BikeTireFrontOffset := 0x32C
 BikeTireRearOffset := 0x32D
 CarHealthOffset := 0x204
 CarHealthTarget := 10000.0 ; 10x the normal maximum health.
-%TimedEffectName%Time := 5000
+%TimedEffectName%Time := 2500
 %TimedEffectName%ContinuouslyActivate = 1
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4) OR Memory(3, PlayerStatusAddress, 1) != 50) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
+gosub CheckOnFoot
 return
 
 
@@ -964,9 +924,8 @@ If InteriorTargetChosen = 0
 		InteriorTarget = 18
 	InteriorTargetChosen = 1
 }
-if (Memory(3, InteriorLoadedAddress, 1) != InteriorOutside) ; Check if player is not outside.
-	SkipTimedEffect = 1
 %TimedEffectName%ContinuouslyActivate = 1
+gosub CheckInInterior
 return
 
 
@@ -995,12 +954,9 @@ if VersionOffset = -4088
 	PolarisAddress := 0x00691E96+VersionOffset
 else
 	PolarisAddress := 0x00691E96 
-OnNotRealMissionAddress := 0x008224F0+VersionOffset
 PolarisOriginal := 15286 ; Short
 PolarisTarget := 0
-MissionValue := Memory(3, OnMissionAddress, 4) + Memory(3, OnNotRealMissionAddress, 4)
-If (MissionValue != 1) ; Phone calls etc set both the OnMission and OnNotRealMission flag and we don't want to activate the effect during a phone call.
-	SkipTimedEffect = 1
+gosub CheckOnNotRealMission
 return
 
 
@@ -1127,10 +1083,8 @@ if VersionOffset = -4088
 else 
 	BounceAddress := 0x0068F5EC
 BounceOriginal := 0.53
-if (Memory(3, PlayerPointer, 4) = Memory(3, CarPointer, 4)) ; Check if player is not in a vehicle
-	SkipTimedEffect = 1
-If (IsInArray(PermanentEffectsActiveArray, "Bounce")) ; Check if the permanent effect "Bounce" is active
-	SkipTimedEffect = 1
+gosub CheckOnFoot
+gosub CheckBouncePermanent
 return
 
 NoBounceActivate:
@@ -1181,17 +1135,9 @@ return
 EclipseData:
 BrightnessAddress := 0x00869648+VersionOffset ; Needs to be changed (slightly) from default otherwise the effect doesn't do anything
 If VersionOffset = -4088 ; Steam
-{
-	TimeHoursAddress := 0x00A0FB75
-	TimeMinutesAddress := 0x00A0FB9C
 	EclipseAddress := 0x00699197
-}
 Else
-{
-	TimeHoursAddress := 0x00A10B6B+VersionOffset
-	TimeMinutesAddress := 0x00A10B92+VersionOffset
 	EclipseAddress := 0x0069A197
-}
 TimeHoursTarget := 23
 TimeMinutesTarget := 58
 EclipseOriginal := 59 ; Byte
@@ -1274,10 +1220,49 @@ XCoordinateTarget := 470.703583
 YCoordinateTarget := -71.482162
 ZCoordinateTarget := 10.483632
 InteriorTarget := 17
-If (Memory(3, OnMissionAddress, 4) = 1)
-	SkipTimedEffect = 1
+gosub CheckOnMission
 gosub TeleportGenericData
 return
+
+GolfData:
+XCoordinateTarget := 74.752792
+YCoordinateTarget := 590.400757
+ZCoordinateTarget := 18.570541
+InteriorTarget := 0
+gosub TeleportGenericData
+return
+
+ImOuttaHereData: ; Airport
+XCoordinateTarget := -1359.881714
+YCoordinateTarget := -931.143860
+ZCoordinateTarget := 20.893085
+InteriorTarget := 0
+gosub TeleportGenericData
+return
+
+CubicleData:
+XCoordinateTarget := -534.429810
+YCoordinateTarget := 786.738586
+ZCoordinateTarget := 97.510437
+InteriorTarget := 0
+; Only allow this effect if the player has ammo for any weapon, as the place you are teleported to can't be exited without breaking glass.
+WeaponStructureAddress := Memory(5, PlayerPointer, WeaponStructureOffset)
+WeaponStructureOffset := 0x408
+WeaponsStructureAmount := 10
+WeaponStructureSize := 0x18
+WeaponAmmoOffset := 0x0C
+gosub CheckPlayerHasAnyWeapon
+gosub TeleportGenericData
+return
+
+InTheArmyNowData:
+XCoordinateTarget := -1691.595703
+YCoordinateTarget := -177.515533
+ZCoordinateTarget := 29.752483
+InteriorTarget := 0
+gosub TeleportGenericData
+return
+
 
 TeleportGenericData:
 PlayerXCoordinateOffset := 0x34
@@ -1285,19 +1270,19 @@ PlayerYCoordinateOffset := 0x38
 PlayerZCoordinateOffset := 0x3C
 InteriorLoadedAddress := 0x00978810+VersionOffset
 ; InteriorOutside := 0
-%TimedEffectName%Time = 5000
-if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4) OR Memory(3, PlayerStatusAddress, 1) != 1) ; Check if player is in a vehicle or doing something which might interfere with teleporting.
-	SkipTimedEffect = 1
-if SanicModeEnabled = 1
-{
-	SanicModeAdditionalDifficulty := GetPseudoRandomValueUpTo(10)
-	if SanicModeAdditionalDifficulty != 1
-		SkipTimedEffect = 1
-}
+%TimedEffectName%Time = 10000
+SanicModeAdditionalDifficulty := 10
+gosub CheckInVehicle
+gosub CheckOnFootNormalStatus
+gosub CheckSanicExtraDifficulty
 return
 
 HomeActivate:
 RaveActivate:
+GolfActivate:
+ImOuttaHereActivate:
+CubicleActivate:
+InTheArmyNowActivate:
 PlayerXAddress := Memory(5, PlayerPointer, PlayerXCoordinateOffset)
 PlayerYAddress := Memory(5, PlayerPointer, PlayerYCoordinateOffset)
 PlayerZAddress := Memory(5, PlayerPointer, PlayerZCoordinateOffset)
@@ -1310,6 +1295,10 @@ return
 
 HomeDeactivate:
 RaveDeactivate:
+GolfDeactivate:
+ImOuttaHereDeactivate:
+CubicleDeactivate:
+InTheArmyNowDeactivate:
 ; Nothing needs to be deactivated
 return
 
@@ -1376,9 +1365,8 @@ If MouseSensitivityStored != 1
 	MouseSensitivityStored = 1
 }
 MouseSensivityTarget := MouseSensivityOriginal*MouseSensivityTargetMultiplier ; To make sure everyone is affected in more or less the same way, the target value is dependent on the original value.
-if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4)) ; Check if player is in a vehicle because mouse sensitivity doesn't affect anything then anyway.
-	SkipTimedEffect = 1
 %TimedEffectName%ContinuouslyActivate = 1
+gosub CheckInVehicle
 return
 
 HighDPIActivate:
@@ -1430,3 +1418,164 @@ loop %WeaponStructuresAmount%
 		Memory(4, PlayerWeaponStateFirstAddress+WeaponSlot*WeaponStructureSize, WeaponStateOriginal, 4)
 }
 return
+
+; ######################################################################################################
+; ############################################## FULL HEAL #############################################
+; ######################################################################################################
+
+; Gives the player their max health.
+FullHealData:
+MaxHealthAddress := 0x0094AE6B+VersionOffset
+HealthOffset := 0x354
+return
+
+FullHealActivate:
+HealthTarget := Memory(3, MaxHealthAddress, 1)
+HealthAddress := Memory(5, PlayerPointer, HealthOffset)
+if (Memory(3, HealthAddress, 4, "Float") < HealthTarget)
+	Memory(4, HealthAddress, HealthTarget, 4, "Float")
+return
+
+FullHealDeactivate:
+; Don't need to do anything here.
+return
+
+; ######################################################################################################
+; ############################################# FULL ARMOUR ############################################
+; ######################################################################################################
+
+; Gives the player their max armour.
+FullArmourData:
+MaxArmourAddress := 0x0094AE6C+VersionOffset
+ArmourOffset := 0x358
+return
+
+FullArmourActivate:
+ArmourTarget := Memory(3, MaxArmourAddress, 1)
+ArmourAddress := Memory(5, PlayerPointer, ArmourOffset)
+if (Memory(3, ArmourAddress, 4, "Float") < ArmourTarget)
+	Memory(4, ArmourAddress, ArmourTarget, 4, "Float")
+return
+
+FullArmourDeactivate:
+; Don't need to do anything here.
+return
+
+; ######################################################################################################
+; ############################################## TAXI JUMP #############################################
+; ######################################################################################################
+
+; This effect will turn on the taxi jump ability, and set the vehicle the player is currently in
+; as one of the vehicle that can jump. The effect doesn't work on bikes or boats or heli's, but it
+; doesn't cause any problems either so we don't have to protect against that. Only triggers when player
+; is in a vehicle that is not a boat.
+TaxiJumpData:
+VehicleIDOffset := 0x5C
+TaxiJumpModel1Original := 150
+If VersionOffset = -4088 ; Steam
+{
+	TaxiJumpModel1Address := 0x00592ED0
+	TaxiJumpEnabledAddress := 0x00A0FB43
+}
+else
+{
+	if VersionOffset = 8 ; V1.1
+		TaxiJumpModel1Address := 0x0059310C
+	else
+		TaxiJumpModel1Address := 0x005930EC
+
+	TaxiJumpEnabledAddress := 0x00A10B3A+VersionOffset
+}
+
+TaxiFaresCompletedAddress := 0x00821844+VersionOffset
+gosub CheckOnFoot
+gosub CheckInBoat
+return
+
+
+TaxiJumpActivate:
+if (Memory(3, TaxiJumpEnabledAddress, 1) != 1)
+	Memory(4, TaxiJumpEnabledAddress, 1, 1)
+return
+
+TaxiJumpDeactivate:
+if (Memory(3, TaxiJumpModel1Address, 1) != 150)
+	Memory(4, TaxiJumpModel1Address, 150, 1)
+if (Memory(3, TaxiFaresCompletedAddress, 4) < 100)
+{
+	if (Memory(3, TaxiJumpEnabledAddress, 1) != 0)
+		Memory(4, TaxiJumpEnabledAddress, 0, 1)
+}
+else
+{
+	if (Memory(3, TaxiJumpEnabledAddress, 1) != 1)
+		Memory(4, TaxiJumpEnabledAddress, 1, 1)
+}
+return
+
+TaxiJumpUpdate:
+if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4)) ; player in vehicle
+{
+	VehicleIDAddress := Memory(5, CarPointer, VehicleIDOffset)
+	VehicleID := Memory(3, VehicleIDAddress, 1)
+	if (Memory(3, TaxiJumpModel1Address, 1) != VehicleID)
+		Memory(4, TaxiJumpModel1Address, VehicleID, 1)
+}
+return
+
+; ######################################################################################################
+; ############################################# TIME LAPSE #############################################
+; ######################################################################################################
+
+; This effect changes the number of ms in an ingame minute, which makes the game time go really fast and
+; makes the sky do weird stuff.
+TimeLapseData:
+if (VersionOffset = -0xFF8)
+	TimeLapseAddress := 0x0097F2B4-0xFF8
+else if (VersionOffset = 8)
+	TimeLapseAddress := 0x0097F2B4+8
+else
+	TimeLapseAddress := 0x0097F2B4
+TimeLapseTarget := 10
+TimeLapseOriginal := 1000
+return
+
+TimeLapseActivate:
+if Memory(3, TimeLapseAddress, 4) != TimeLapseTarget
+	Memory(4, TimeLapseAddress, TimeLapseTarget, 4)
+return
+
+TimeLapseDeactivate:
+if Memory(3, TimeLapseAddress, 4) != TimeLapseOriginal
+	Memory(4, TimeLapseAddress, TimeLapseOriginal, 4)
+return
+
+; ######################################################################################################
+; ############################################# C.R.A.S.H. #############################################
+; ######################################################################################################
+
+/*
+; Don't enable this effect, because when activated it will also stop the ingame timer from updating, which
+; is used to determine when to switch to the next timed effect. Therefore this effect will never end,
+; making the fake crash an actual crash!
+C.R.A.S.H.Data:
+if (VersionOffset = -0xFF8)
+	CRASHAddress := 0x00A10B76-0xFF6
+else if (VersionOffset = 8)
+	CRASHAddress := 0x00A10B76+9
+else
+	CRASHAddress := 0x00A10B76
+CRASHTarget := 1
+CRASHOriginal := 0
+return
+
+C.R.A.S.H.Activate:
+if Memory(3, CRASHAddress, 1) != CRASHTarget
+	Memory(4, CRASHAddress, CRASHTarget, 1)
+return
+
+C.R.A.S.H.Deactivate:
+if Memory(3, CRASHAddress, 1) != CRASHOriginal
+	Memory(4, CRASHAddress, CRASHOriginal, 1)
+return
+*/

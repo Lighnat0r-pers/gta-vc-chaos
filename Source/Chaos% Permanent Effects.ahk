@@ -1,5 +1,5 @@
 ; ######################################################################################################
-; ############################################# PERMANENT EFFECTS ######################################
+; ########################################## PERMANENT EFFECTS #########################################
 ; ######################################################################################################
 
 /*
@@ -19,8 +19,7 @@ Subheadings:
 	Vampire
 */
 
-; ######################################################################################################
-; ######################################### PERMANENT PACKAGE HEALTH ###################################
+; ###################################### PERMANENT PACKAGE HEALTH ######################################
 ; ######################################################################################################
 
 ; This effect will set the maximum health to double the amount the of hidden packages collected. In
@@ -37,6 +36,7 @@ MaxHealthAddress := 0x0094AE6B+VersionOffset
 ;MaxArmourAddress := 0x0094AE6C+VersionOffset
 PercentageCompletedAddress := 0x00821418+VersionOffset
 PizzaDeliveryCompletedAddress := 0x00821894+VersionOffset
+MinMaxHealth := 2
 return
 
 PermanentPackageHealthActivate:
@@ -53,8 +53,8 @@ return
 
 PermanentPackageHealthUpdate:
 NewMaxHealth := Memory(3, HiddenPackagesAddress, 4) * 2
-if NewMaxHealth < 2
-	NewMaxHealth = 2
+if (NewMaxHealth < MinMaxHealth)
+	NewMaxHealth := MinMaxHealth
 Memory(4, MaxHealthAddress, NewMaxHealth, 1)
 HealthAddress := Memory(5, PlayerPointer, HealthOffset)
 if (Memory(3, HealthAddress, 4, "Float") > NewMaxHealth)
@@ -62,8 +62,20 @@ if (Memory(3, HealthAddress, 4, "Float") > NewMaxHealth)
 return
 
 
+; ########################################### HEADSHOT ARMOUR ##########################################
 ; ######################################################################################################
-; ######################################### PERMANENT MISSION SUICIDE ##################################
+
+; Once done, this effect will ste the maximum armour to be related to the number of headshots you have made.
+; In this case, it's fine if the maximum armour is 0.0 (I think).
+; When disabling this effect, the maximum health is set back to what it would've been without Chaos%.
+; In order to do that, we need to check if vigilante has been completed (which makes the maximum 150)
+; and if the game has been completed 100% (which makes the maximum 200). If neither is true, the maximum is 100.
+;ArmourOffset := 0x358
+;MaxArmourAddress := 0x0094AE6C+VersionOffset
+;PercentageCompletedAddress := 0x00821418+VersionOffset
+;VigilanteCompletedAddress := 0x00822B38+VersionOffset
+
+; ###################################### PERMANENT MISSION SUICIDE #####################################
 ; ######################################################################################################
 
 ; This effect kills the player every time the completion percentage is increased. This is usually at the
@@ -92,9 +104,7 @@ if (PercentageOld < PercentageNew)
 PercentageOld := PercentageNew
 return
 
-
-; ######################################################################################################
-; ########################################## PERMANENT FLINTSTONE ######################################
+; ######################################## PERMANENT FLINTSTONE ########################################
 ; ######################################################################################################
 
 ; This effect causes the infamous walking in car glitch. While controlling a vehicle, the game behaves as
@@ -145,8 +155,7 @@ PermanentFlintstoneUndoTimeOut:
 PermanentFlintstoneTimedOut = 0
 return
 
-; ######################################################################################################
-; ######################################### PERMANENT NO DRIVE-BY ######################################
+; ######################################## PERMANENT NO DRIVE-BY #######################################
 ; ######################################################################################################
 
 ; This effect disables the drive-by ability.
@@ -166,7 +175,6 @@ if (Memory(3, DriveByEnabledAddress, 1) = 1)
 	Memory(4, DriveByEnabledAddress, 0, 1)
 return
 
-; ######################################################################################################
 ; ######################################### PERMANENT IMMERSION ########################################
 ; ######################################################################################################
 
@@ -194,7 +202,6 @@ if (Memory(3, HUDEnabledAddress, 1) = 1)
 	Memory(4, HUDEnabledAddress, 0, 1)
 return
 
-; ######################################################################################################
 ; ######################################## PERMANENT OTHER MONEY #######################################
 ; ######################################################################################################
 
@@ -257,8 +264,7 @@ if (Memory(3, DirtringCurrentTimeAddress, 4) != 817000)
 return
 */
 
-; ######################################################################################################
-; ######################################## PERMANENT ANGRY DRIVERS #####################################
+; ####################################### PERMANENT ANGRY DRIVERS ######################################
 ; ######################################################################################################
 
 ; There are two parts to this effect. The first part changes the speed with which angry drivers go to
@@ -304,8 +310,7 @@ if (Memory(3, CollisionAddress, 1) != 0)
 	Memory(4, CollisionAddress, 0, 2)
 return
 
-; ######################################################################################################
-; ############################################# PERMANENT BOUNCE #######################################
+; ########################################## PERMANENT BOUNCE ##########################################
 ; ######################################################################################################
 
 ; These effects change the amount of damping done by the suspension of a vehicle.
@@ -331,9 +336,7 @@ if (Memory(3, BounceAddress, 4, "Float") != PermanentBounceTarget)
 	Memory(4, BounceAddress, PermanentBounceTarget, 4, "Float")
 return
 
-
-; ######################################################################################################
-; ##################################### PERMANENT I'M THE INVISIBLE DRIVER #############################
+; ################################# PERMANENT I'M THE INVISIBLE DRIVER #################################
 ; ######################################################################################################
 
 ; Turns the vehicle Tommy is in invisible.
@@ -365,9 +368,7 @@ if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4))
 }
 return
 
-
-; ######################################################################################################
-; ############################################# PERMANENT RAYMAN #######################################
+; ########################################## PERMANENT RAYMAN ##########################################
 ; ######################################################################################################
 
 ; Punching while running will deal massive damage to everything in a sizable radius.
@@ -403,9 +404,7 @@ If Memory(3, WeaponDatStartAddress+WeaponDatStructureSize*FistWeaponID+WeaponDat
 	Memory(4, WeaponDatStartAddress+WeaponDatStructureSize*FistWeaponID+WeaponDatRadiusOffset, FistRadiusTarget, 4, "Float")
 return
 
-
-; ######################################################################################################
-; ###################################### PERMANENT NO MAGICAL BACKPACK #################################
+; #################################### PERMANENT NO MAGICAL BACKPACK ###################################
 ; ######################################################################################################
 
 ; This effect will drastically reduce the amount of weapon slots available. The player can only carry one weapon
@@ -440,23 +439,17 @@ For WeaponID in WeaponsArray
 }
 return
 
-
-; ######################################################################################################
-; ############################################# PERMANENT VAMPIRE ######################################
+; ########################################## PERMANENT VAMPIRE #########################################
 ; ######################################################################################################
 
 ; This effect will give the player health for killing people, but lose health during daytime (while not in an interior).
 ; To make it more realistic, force the weather to extra sunny during the day.
 PermanentVampireData:
-If VersionOffset = -4088 ; Steam
-	TimeHoursAddress := 0x00A0FB75
-Else
-	TimeHoursAddress := 0x00A10B6B+VersionOffset
 Weather1Address := 0x00A10A2E+VersionOffset
 Weather2Address := 0x00A10AAA+VersionOffset
 HealthOffset := 0x354
 InteriorLoadedAddress := 0x00978810+VersionOffset
-PeopleKilledAddress := 0x00978794+VersionOffset ; Check this (should be fine)
+PeopleKilledAddress := 0x00978794+VersionOffset
 HealthPenalty := 1
 HealthPerKill := 4
 TimeBetweenDamage := 1000 ; In ms
@@ -507,4 +500,110 @@ If (Memory(3, TimeHoursAddress, 1) >= DaytimeStart AND Memory(3, TimeHoursAddres
 		}
 	}
 }
+return
+
+; ######################################### PERMANENT TAXI JUMP ########################################
+; ######################################################################################################
+
+; This effect will turn on the taxi jump ability, and set the vehicle the player is currently in
+; as one of the vehicle that can jump. The effect doesn't work on bikes or boats or heli's, but it
+; doesn't cause any problems either so we don't have to protect against that.
+PermanentTaxiJumpData:
+VehicleIDOffset := 0x5C
+TaxiJumpModel1Original := 150
+If VersionOffset = -4088 ; Steam
+{
+	TaxiJumpModel1Address := 0x00592ED0
+	TaxiJumpEnabledAddress := 0x00A0FB43
+}
+else
+{
+	if VersionOffset = 8 ; V1.1
+		TaxiJumpModel1Address := 0x0059310C
+	else
+		TaxiJumpModel1Address := 0x005930EC
+
+	TaxiJumpEnabledAddress := 0x00A10B3A+VersionOffset
+}
+
+TaxiFaresCompletedAddress := 0x00821844+VersionOffset
+return
+
+
+PermanentTaxiJumpActivate:
+if (Memory(3, TaxiJumpEnabledAddress, 1) != 1)
+	Memory(4, TaxiJumpEnabledAddress, 1, 1)
+return
+
+PermanentTaxiJumpDeactivate:
+if (Memory(3, TaxiJumpModel1Address, 1) != 150)
+	Memory(4, TaxiJumpModel1Address, 150, 1)
+if (Memory(3, TaxiFaresCompletedAddress, 4) < 100)
+{
+	if (Memory(3, TaxiJumpEnabledAddress, 1) != 0)
+		Memory(4, TaxiJumpEnabledAddress, 0, 1)
+}
+else
+{
+	if (Memory(3, TaxiJumpEnabledAddress, 1) != 1)
+		Memory(4, TaxiJumpEnabledAddress, 1, 1)
+}
+return
+
+PermanentTaxiJumpUpdate:
+if (Memory(3, PlayerPointer, 4) != Memory(3, CarPointer, 4)) ; player in vehicle
+{
+	VehicleIDAddress := Memory(5, CarPointer, VehicleIDOffset)
+	VehicleID := Memory(3, VehicleIDAddress, 1)
+	if (Memory(3, TaxiJumpModel1Address, 1) != VehicleID)
+		Memory(4, TaxiJumpModel1Address, VehicleID, 1)
+}
+return
+
+; ######################################### PERMANENT MARATHON #########################################
+; ######################################################################################################
+
+; Messes with the running animation stuff of the player. This has the effect that the player can't stand still anymore
+; (the stop sprinting animation will keep looping instead). When running forward, you will get the sprint animation
+; but only move VERY slowly. Holding sprint will fold Tommy sideways i.e. you don't move at all. By tapping sprint
+; at the right pace (figure it out) you can reach insane speeds though. Once you've reached a high speed you can
+; stop tapping sprint and keep the speed as long as you hold any of the movement (WSAD) keys.
+PermanentMarathonData:
+RunAnimationTarget := 2
+RunAnimationOriginal := 1
+SomeFloatTarget := -.001
+SomeFloatOriginal := 0.0
+If VersionOffset = -4088 ; Steam
+{
+	
+	RunAnimationAddress := 0x00536C25-272
+	SomeFloatAddress := 0x00694A7C-0xFF8
+
+}
+else if VersionOffset = 8 ; V1.1
+{
+	RunAnimationAddress := 0x00536C25+32
+	SomeFloatAddress := 0x00694A7C+0
+}
+else
+{
+	RunAnimationAddress := 0x00536C25
+	SomeFloatAddress := 0x00694A7C
+}
+return
+
+
+PermanentMarathonActivate:
+PermanentMarathonUpdate:
+if (Memory(3, RunAnimationAddress, 1) != RunAnimationTarget)
+	Memory(4, RunAnimationAddress, RunAnimationTarget, 1)
+if (Memory(3, SomeFloatAddress, 4, "Float") != SomeFloatTarget)
+	Memory(4, SomeFloatAddress, SomeFloatTarget, 4, "Float")
+return
+
+PermanentMarathonDeactivate:
+if (Memory(3, RunAnimationAddress, 1) != RunAnimationOriginal)
+	Memory(4, RunAnimationAddress, RunAnimationOriginal, 1)
+if (Memory(3, SomeFloatAddress, 4, "Float") != SomeFloatOriginal)
+	Memory(4, SomeFloatAddress, SomeFloatOriginal, 4, "Float")
 return

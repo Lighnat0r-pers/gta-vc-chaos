@@ -14,16 +14,13 @@ gosub PermanentEffectsList ; Populate the permanent effects arrays.
 ; Create the timed effects arrays.
 CurrentLoopCode := "CreateTimedEffectsArrayCode" 
 gosub TimedEffectsList ; Populate the timed effects arrays.
-; Create the duplicates of the timed effects arrays. These will be used (and changed) during the actual selection of the effects.
-; The originals will be used to restore the temporary arrays after every cycle.
-TempTimedEffectsArray := TimedEffectsArray.Clone()
-TempTimedCategoriesArray := TimedCategoriesArray.Clone()
-TempTimedDifficultiesArray := TimedDifficultiesArray.Clone()
 return
 
 
 StaticEffectsList:
 StaticEffectName := "CrazyCones"
+gosub %CurrentLoopCode%
+StaticEffectName := "NoReplay"
 gosub %CurrentLoopCode%
 return
 
@@ -88,6 +85,10 @@ PermanentEffectName := "Bounce"
 PermanentEffectCategory := "Handling"
 PermanentEffectDifficulty = 2
 gosub %CurrentLoopCode%
+PermanentEffectName := "TaxiJump"
+PermanentEffectCategory := "Handling"
+PermanentEffectDifficulty = 2
+gosub %CurrentLoopCode%
 ; Category CarGraphics
 PermanentEffectName := "ImTheInvisibleDriver"
 PermanentEffectCategory := "CarGraphics"
@@ -100,6 +101,11 @@ PermanentEffectDifficulty = 2
 gosub %CurrentLoopCode%
 PermanentEffectName := "NoMagicalBackpack"
 PermanentEffectCategory := "Weapons"
+PermanentEffectDifficulty = 2
+gosub %CurrentLoopCode%
+; Category PlayerPhysics
+PermanentEffectName := "Marathon"
+PermanentEffectCategory := "PlayerPhysics"
 PermanentEffectDifficulty = 2
 gosub %CurrentLoopCode%
 return
@@ -148,25 +154,30 @@ TimedEffectName := "ToFlatTireOrNotToFlatTire"
 TimedEffectCategory := "FlatTire"
 TimedEffectDifficulty = 1
 gosub %CurrentLoopCode%
-; Category Visuals
+; Category GUIVisuals
 TimedEffectName := "DrunkCam"
-TimedEffectCategory := "Visuals"
-TimedEffectDifficulty = 1
+TimedEffectCategory := "GUIVisuals"
+TimedEffectDifficulty = 2
 gosub %CurrentLoopCode%
 TimedEffectName := "ExtremeDrunkCam"
-TimedEffectCategory := "Visuals"
+TimedEffectCategory := "GUIVisuals"
 TimedEffectDifficulty = 4
 gosub %CurrentLoopCode%
+; Category EnvironmentVisuals
 TimedEffectName := "Interior"
-TimedEffectCategory := "Visuals"
+TimedEffectCategory := "EnvironmentVisuals"
 TimedEffectDifficulty = 2
 gosub %CurrentLoopCode%
 TimedEffectName := "Mirage"
-TimedEffectCategory := "Visuals"
-TimedEffectDifficulty = 1
+TimedEffectCategory := "EnvironmentVisuals"
+TimedEffectDifficulty = 2
 gosub %CurrentLoopCode%
 TimedEffectName := "Eclipse"
-TimedEffectCategory := "Visuals"
+TimedEffectCategory := "EnvironmentVisuals"
+TimedEffectDifficulty = 1
+gosub %CurrentLoopCode%
+TimedEffectName := "TimeLapse"
+TimedEffectCategory := "EnvironmentVisuals"
 TimedEffectDifficulty = 1
 gosub %CurrentLoopCode%
 ; Category Wanted
@@ -346,7 +357,7 @@ gosub %CurrentLoopCode%
 ; Category Handling
 TimedEffectName := "NoBounce"
 TimedEffectCategory := "Handling"
-TimedEffectDifficulty = 2
+TimedEffectDifficulty = 3
 gosub %CurrentLoopCode%
 TimedEffectName := "Bounce"
 TimedEffectCategory := "Handling"
@@ -355,6 +366,10 @@ gosub %CurrentLoopCode%
 TimedEffectName := "BouncyBounce"
 TimedEffectCategory := "Handling"
 TimedEffectDifficulty = 2
+gosub %CurrentLoopCode%
+TimedEffectName := "TaxiJump"
+TimedEffectCategory := "Handling"
+TimedEffectDifficulty = 3
 gosub %CurrentLoopCode%
 ;; Category Weather
 ;TimedEffectName := "RandomWeather"
@@ -370,10 +385,35 @@ TimedEffectName := "Rave"
 TimedEffectCategory := "Teleport"
 TimedEffectDifficulty = 3
 gosub %CurrentLoopCode%
+TimedEffectName := "Golf"
+TimedEffectCategory := "Teleport"
+TimedEffectDifficulty = 4
+gosub %CurrentLoopCode%
+TimedEffectName := "ImOuttaHere"
+TimedEffectCategory := "Teleport"
+TimedEffectDifficulty = 4
+gosub %CurrentLoopCode%
+TimedEffectName := "Cubicle"
+TimedEffectCategory := "Teleport"
+TimedEffectDifficulty = 4
+gosub %CurrentLoopCode%
+TimedEffectName := "InTheArmy"
+TimedEffectCategory := "Teleport"
+TimedEffectDifficulty = 4
+gosub %CurrentLoopCode%
 ; Category Weapons
 TimedEffectName := "Pacifist"
 TimedEffectCategory := "Weapons"
 TimedEffectDifficulty = 5
+gosub %CurrentLoopCode%
+; Category PlayerStats
+TimedEffectName := "FullHeal"
+TimedEffectCategory := "PlayerStats"
+TimedEffectDifficulty = 4
+gosub %CurrentLoopCode%
+TimedEffectName := "FullArmour"
+TimedEffectCategory := "PlayerStats"
+TimedEffectDifficulty = 4
 gosub %CurrentLoopCode%
 return
 

@@ -1,16 +1,11 @@
 
 Extras (TBD?):
 
-* Make the "Chaos%" text in the bottom right corner more subtle.
-* Add the 'cheat' ToggleChaos in case something breaks (be sure to show if it is disabled in the text on screen). Hopefully the program will be stable enough that this is not necessary. However it might be cool to have a timeout feature, which means you can disable the mod temporarily (either a limited amount of times or for an exponentially increasing penalty).
+* Make the "Chaos%" text ingame more subtle.
+* It might be cool to have a timeout feature, which means you can disable the mod temporarily (either a limited amount of times or for an exponentially increasing penalty).
 * Make (it possible that) timed effects overlap. This goes well together with shorter effects e.g. RandomFall%
-* Add a selectable difficulty level in the interface which changes number of permanent effects, maybe some other stuff as well. (It would affect the difficulties in a way such as all difficulties*1 for hard, *2 for medium and *3 for easy(round afterwards). This would make the more difficult effects even less likely.)
-* Alternate way to pick permanent effects: Instead of determining a number of effects, have set difficulty levels (start with just 'normal' or something) which has a max difficulty of say 5. Then keep picking effects until the combined difficulty of those effects is >= the max difficulty. There are no issues with the way it is currently chosen, but this might be neccessary in the future
-* Add a third effects type which are always active no matter what (i.e. not depending on seed). These shouldn't make the game harder or easier per se, just some cool/interesting stuff (e.g. slight changes to missions such as SSA or PP).
-* Add a category weight. Basically this indicates how many effects of this category trigger every cycle (instead of the fixed 1 effect now).
 * Add a description of the permanent effects in the output window for effects such as OtherMoney%, which need it to be clear. This description should also appear ingame for those with only one monitor.
-* Difficulty might be a bit too powerful on the permanent effects? (e.g. difficulty 5 makes the effect trigger much much less often than difficulty 4)
-* Add the settings window as seen in the 100% checklist. Also add: "Show permanent effects in output", "Change quicksave hotkey", "Always on top (not sure if it works/is useful)"
+* Add the settings window as seen in the 100% checklist. Also add: "Show permanent effects in output", "Change quicksave hotkey"
 * Implement remote activation of the effects #Kappa
 * Combine it with some sort of bingo for more variation in goals (need to make sure all the effects are compatible with all the bingo ideas)
 * Add secrets such as useful pickups. They would need to be changed often to keep them fresh and actually secret.
@@ -40,8 +35,8 @@ Military% (Make the military spawn at 2 stars)
 HeadshotRampage% (Do something with reenabling headshot rampages. What is possible?)
 Bazooka% (Only allow use of the bazooka, give ammo though)
 ColtPython% (Only allow use of the Colt Python, give ammo though)
-Lava% (If you're standing on the ground (roof etc will also count I think) you lose health. e.g. lose 10 hp/s after standing on the ground for at least 1 second. In a similar way, your car will take damage perhaps? This could be combined for having boost jump enabled for your current vehicle)
-GTA4% (Add the Spilling The Beans taxi in all missions. No, this will probably never happen)
+Lava% (If you're standing on the ground (roof etc will also count I think) you lose health. e.g. lose 10 hp/s after standing on the ground for at least 1 second.)
+GTA4% (Add the Spilling The Beans taxi in all missions. No, this will never happen)
 RandomMission% (mission order is random. Tricky, would have to do some testing to see if it is viable)
 UFO% (change control scheme, i.e. W is move north, S south, A west, D east, tilt forward key is up, tilt backward key is down, or something like that)
 StickyCamera% (Force the sticky camera. Not sure how this could be done)
@@ -74,7 +69,6 @@ Stuntman - No bribes. Completing a unique stunt jump (first time only?) removes 
 
 
 Timed:
-Poison% (lose x health every x seconds. Add visual bleeding effect)
 Riot% (peds have (custom) weapons and are hostile. Also activate the riot noise at player location)
 Enemieshavedifferentweapons% (similar to riot%, more difficult to implement)
 PoliceWeaponized% (Cops have different weapons)
@@ -105,7 +99,6 @@ Colours% (find some interesting stuff to do with colours)
 KeyRemap% (Change keybinds, e.g. reversed, sometimes it only switches left and right, sometimes it switches up and down, sometimes it's a full reverse, and maybe sideways too, so like left is forward)
 RandomSounds% (Play random sounds in the background, explosions, airhorns, car on fire, sirens, shooting etc)
 ConsoleAutoaim% (Activate autoaim, probably pretty difficult to implement)
-NoJump% (Look at how the game disables jumping while carrying a bazooka)
 InverseFog% (Only see far away, not close by (perhaps tie a smoke grenade to player position?))
 RandomWeaponDamage% (Change the damage weapons deal)
 (Use media attention or criminal rating for something)
@@ -151,19 +144,15 @@ StingOperation% Cop bribes increase your wanted level instead of decreasing it. 
 Random faggio squad spawn
 random fixed car spawns explode when you get in them.
 extreme collision damage (lampposts only?)
-moving cones in cone crazy (CrazyCone%)
 Benny Hill theme during double speed
 Suicide% people jump in front of your car
-Splash% (weapons cause no damage temporarily)
 Tunnel% (shitty tunnel camera angle)
 Stall% (car engine stops working temporarily)
 CrazyLegs% (tommy keeps moving left and right in quick succession)
 -StarPower%: Cars cycle random colours + Mario star music + crashing into peds/cars sends them flying without damaging you
--DrunkCameraman%: have the camera rotate and swing around; make the camera turn much further/faster when adjusted
 -Fisheye%: random fisheye camera
 -LowBattery%: have the radio play at a much lower (or higher) pitch than normal
 -Satan%: have the radio play in reverse
--Jump%: make everyone (Tommy, cars, peds) fly a couple feet into the air and then fall again, just once. (short negative gravity should do this)
 -Gouraud%: Force flat shading (disable textures and/or stretch all textures so that they're a single colour)
 -ItsRainingMen%: Peds randomly fall from the sky (spawn up in the air instead of on ground?)
 -ModelSwap%: Randomly swap character models. Include models from other games/mods, e.g. Spongebob, Mario, horses
@@ -171,7 +160,6 @@ CrazyLegs% (tommy keeps moving left and right in quick succession)
 -Hallucination%: Display random subtitles from various dialogue in the game, and/or randomly add "ghost" peds with models of various significant characters, who don't have collision
 -Bikini%: Bikinis for everyone!
 -Aimbot%: Automatically aim at the nearest target
--Bouncy%: Alternate between low and high gravity
 -Tantrum%: Tommy flails his arms wildly while running/driving (like when he's falling)
 -DoorLock%: Tommy refuses to get into/out of cars
 -Reverse%: Cars drive backward
@@ -212,7 +200,6 @@ Other stuff:
 Maybe disable some effects in boat (those which are not relevant, such as AngryDrivers%)
 Disable some effects in a heli: FlatTire, Bounce
 Disable RainbowCar% for vehicles on which it doesn't work
-Disable effects when player is not controllable (for stability)
 Markers, subtitles don't appear (this is due to the Chaos% text appearing in the slot where wasted and busted normally are. I'm working on using another text slot, but that's easier said than done)
 Some sort of penalty for using cheats? (You shouldn't be using them anyway)
 Change SSA so it's more fun (not easier per se)
@@ -222,11 +209,7 @@ The more extreme car collisions effect in AngryDrivers% has the following side e
 The same side effects happened with Vampire%, MissionSuicide%, NoDriveBy% and Bounce% at the same time. The side effects didn't disappear after disabling the effects.
 Check out a graphical settings mod for some ideas for graphical effects.
 Lance turns invisible at the start of Guardian Angels with ImTheInvisibleDriver%
-Restore the car when exiting on permanent ImTheInvisibleDriver%
 Calling the data part of the effect every time if the effect has ContinouslyActivate enabled is pretty inefficient.
-More positive effects
-Make a separate effect type for the purely positive effects, out of which a few things are chosen when starting Chaos%.
-Disable permanent effects when loading/starting a new game.
 
 
 
@@ -256,7 +239,7 @@ OffRoadGetAGrip% (Extreme grip off-road) permanent (Alternate name: Sticky%)
 OffRoadLoseYourGrip% (No grip off-road) permanent
 GimmeTheGrass% (Everything has grass-type grip) permanent (and timed?) (Alternate name: TurfWar%)
 All cars behave like helicopters.
-Monstertruck% (all cars have huge wheels. wheel scale 2 is probably the best balance, larger and cars flip over too easily. Note: this makes tires very easy to hit obviously)
+Monsterwheels% (all cars have huge wheels. wheel scale 2 is probably the best balance, larger and cars flip over too easily. Note: this makes tires very easy to hit obviously)
 Melee% (do melee attacks with all weapons by forcing the melee animation)
 InvisibleWeapons% (remove the weapon models, perhaps also make the clip size the same for each weapon to make it more difficult to determine which weapon you are holding)
 FakeWeapon% (replace all weapon models with just one, problem is that the game doesn't load the model automatically)
@@ -266,18 +249,15 @@ Replace text in game with random stuff
 BanHammer% (replace all text with <message deleted>)
 Every weapon is 1 hit kill (which would be true for both you and your opponents. Perhaps better is that 1 hit deals 100 damage, so with armour you can tank 2 shots) (Add explosions on death)
 RedVan% (all cars red vans)
-FullHeal% (Fully repairs your car and restores all health (but not armour))
-Armour% (Give full armour)
 random cones spawning on the road, and if you hit them, you get a wanted star?
 Mouse doesn't do anything (permanent effect?)
 FlashMob% (all peds including tommy do a random animation)
 Something gayweed related
 Some sort of effect which gives you a time limit to do something, otherwise something bad happens. (events such as a rampage, getting 6 stars, going to a specific place etc)
-Give the player some "items" which can be used during the run (1 time use). (Think of double speed potion, full heal, that kinda stuff, higher damage) (permanent)
+Give the player some "items" which can be used during the run (1 time use). (Think of double speed potion, full heal, that kinda stuff, higher damage) (permanent/static)
 Player deals more damage with lower health (permanent)
 KnifeAfterDark% (Night% with additional effects such as: give the player a knife, no other weapons(?))
 RushHour% (High car density and high max vehicles on road)
-TimeLapse% (Set an ingame minute to last 1 ms)
 Realtime% (Set an ingame minute to last 1 minute)
 MiniTommy% (make tommy very small)
 MegaTommy% (make tommy huge)
@@ -300,47 +280,39 @@ Loading screen between islands is a likely crash point
 
 
 spontaneouscombustion% - player burst into flames randomly
-tigerwoods% - teleports you to the golf course, all cars are golf carts
+tigerwoods% - all cars are golf carts
 PerfectCrime% - Cops literally don't react to you whatever you do
 Water% - Randomly spawned above water to then fall to your death into the water
 michaelbay% is a good one, where theres random explosions around you
 cellphone% just have it ring for 30 seconds with no way to stop it (sound only)
-Lighnat0r, is it possible to make zombie% where NPCs will die only if their head is shot off?
-Lighnat0r, could you make it so you can spend money to change the effect? XD / what about spending HP to change effects
+is it possible to make zombie% where NPCs will die only if their head is shot off?
+could you make it so you can spend money to change the effect? XD / what about spending HP to change effects
 Always stuck in reverse
-Lighnat0r, it would also be nice is there was a counter that counted down how long til the next effect (optional)
-lightnator could you do a zoom% where it zooms really close in or out?
-how about making some effects that are permanent that you can spend HP to change and other little randoms ones that happen throughout the game?
+it would also be nice is there was a counter that counted down how long til the next effect (optional)
+could you do a zoom% where it zooms really close in or out?
+how about making some effects that are permanent that you can spend HP to change and other little randoms ones that happen throughout the game? -> not HP, but maybe some limited number of times you can do something positive -> create an "inventory" with eg. 10x skip effect, 5x give health, etc etc
 Least used radio station gets put on?
 Loading%, Display the loading screen for five seconds
 Supercops
-Lighnat0r, is it possible to make all NPCs trying steal your car
+is it possible to make all NPCs trying steal your car
 Superman%: you teleport into the sky, falling to your death
-Lighnat0r, also, is it possible to change players run animation into rolling animation and thus create sanic%?
+is it possible to change players run animation into rolling animation and thus create sanic%?
 solarflare%: screen goes white, or has a bad lense flare for 30 seconds
 Make Lance do dance animation LanceDance%
-Lightnat0r, what about something that mirrors all actions taken like walking and aiming and driving?
+what about something that mirrors all actions taken like walking and aiming and driving?
 Getting out of the car in PitStop% means wheels arent returned, can something be done?
-Lighnat0r, cars always oversteering/drifting would be hilarious.
+cars always oversteering/drifting would be hilarious.
 
 Race stuff.txt:
-PitStop% frequency, also reduce length since it's supposed to be a positive effect.
 PitStop% right after FlatTire%
-Frequency of SuddenCarDeath% since it's not that great an effect anyway, esp. during missions.
 AngryDrivers + Bounce as permanent together is a bit much perhaps.
 Flintstone% during CP?
 
 nerf stuff during CP also angrydrivers
 
-Increase teleport effects length to avoid triggering the next effect (beammeupscotty) before loading collision
-
 didn't die while in car when it exploded
 
 drunkcam didn't disable when closing chaos% 
-
-quicksave
-bugs out if you hold w (also without holding it)
-doesn't revert time advance
 
 every Xth car has tank contact properties
 
@@ -359,7 +331,6 @@ SuddenDeath%
 NoSprint%
 Fat%
 Stickman%
-Jump%
 
 GTA Stuff.txt:
 * ToDieOrNotToDie - Lose 50 health no matter how much you have, ignoring armour (perhaps show a message beforehand to indicate this is going to happen. Maybe some sort of QTE to avoid the effect? e.g. destroy a vehicle in the next 10? seconds or lose 50 hp. Show the message onscreen + a timer.
@@ -371,7 +342,6 @@ GTA Stuff.txt:
 * disable streaming (loading high res textures and collision, existing remains in place) 0x00A10B1E (1 is disabled, 0 is enabled)
 * Packerception% (Packers are the best vehicles)
 * ColourFilters: Use "weather extra colour" (with fade). Use values higher than 23 for strange colours. (needs to be re-set on interior change and on mission end)
-* Extreme DrunkCam% 0x00983B38 is intensity
 * WhoTurnedOffTheLights%, BloodyHell%, Disco% etc. (Mess with fade intensity and colour)
 * Make car health depend on something collected.
 * Check out using custom textures to spawn custom pickups (e.g. gta2 style stuff)
@@ -382,7 +352,6 @@ GTA Stuff.txt:
 * Finishing Dirtring with 0:00 gives a load of money
 
 Crash on shutdown
-Static effects (these are always active)
 PackageHealth%: Getting in an ambulance ignores the altered max health when giving 20 health. No it doesn't.
 ImTheInvisibleDriver%: Inconsistent in making the car visible when exiting.
 Controls in car don't work in 1st person view due to Flintstone% or ImTheInvisibleDriver% (or the combination?)
@@ -407,17 +376,12 @@ darkplace soundclip for phonecall%
 "Onion" design for better cherry-picking (e.g. only trigger tier 1 or 2 effects during CP)
 Vampire% + Rayman% OP (no need to reduce vampire rate)
 Polaris% can be cool occasionally but mostly it sucks.
-Lag%: Lag interval pseudo-random.
 option for 2 timed effects at once?
-home% during cutscene softlocked the game
 BouncyBounce%: play Bouncy Bouncy - K9 on the radio
 InvisibleDriver% doesnt work on tank
 Collecting every 10 packages triggers MissionSuicide%
 Static effect where in a mission with lance, he randomly gets a health boost and becomes hostile to the  player until his hp is low again.
-Quicksave still broken!
 Teleport effects lower frequency when combined with permanent effects which cause you to be on foot often (e.g. angrydrivers)
-Golf% --> Teleport to middle of Leaf Links (Four Iron spot)
-teleports on the 2nd island
 Maybe AngryDrivers% needs to get a higher difficulty variable
 Effect: make it so armour pick ups = same as current hp 
 Permanent effect: only 1st person view
@@ -426,7 +390,6 @@ Permanent effect: too much infinite sprint: kill player due to heart attack.
 Random AI dies (could be random ped, could be mission character)
 Unique stunt jump armour
 Something with rampages in the same genre as packagehealth
-Monstertruck%: Put player weight at 700000 also give car health to avoid dying
 Shark%: all mission audio replaced with Whoa, cool shark!
 When the player goes to enter a car, set that car health to 250 (burning)
 Game crash while shooting as pacifist% ends
@@ -442,16 +405,18 @@ More permanent effects.
 Settings menu.
 More positive things.
 (at least 20 permanent, 75 timed, and >10% positive)
-Show difficulty in output window.
 
 
 
+Total effects:
+12 permanent
+55 timed
+1 static
 
-
-
-
-
-
+Positive effects:
+2 permanent
+1 timed
+1 static
 
 
 
@@ -474,3 +439,27 @@ Show difficulty in output window.
 Randomise the player heading
 Replays initiated at 0x00625060 in 1.0
 Double Jump --> MexicanJumpingBean%
+Add a few falls during ExtremeDrunkCam%
+ImOnABoat% - teleport to boat in viceport
+Army dudes spawn all over VC
+Change 0x00536AEF from 4 to 3 to disable foot movement other than weird
+jumping. (can get in vehicles when next to them)
+
+Replace all the effect array stuff with objects + classes.
+
+
+For calculations: determine difficulty constants for every limitation.
+Use that + normal difficulty + weight to determine a UseFactor for each
+effect.
+Use total effect lengths etc to determine every how many minutes an effect
+triggers.
+Have a debug hotkey dedicated to outputting that for every effect to the
+outputdebug.
+Compare to real world test to determine if the limitation constants are
+realistic, then fix if necessary.
+
+Maybe later: add changed limitation constants based on permanent effects
+active.
+
+
+

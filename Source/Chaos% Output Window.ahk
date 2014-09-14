@@ -12,6 +12,9 @@ Subheadings:
 
 OutputWindow:
 gui 2:-MinimizeBox -MaximizeBox +LastFound
+gui, 2:Font, w700 Q3 ; Bold
+gui, 2:Add, Text,, %DifficultySetting% difficulty
+gui, 2:Font, w400 Q3 ; Normal
 if StaticEffectsEnabled = 1
 {
 	gui, 2:Font, w700 Q3 ; Bold
@@ -20,13 +23,14 @@ if StaticEffectsEnabled = 1
 }
 if PermanentEffectsEnabled = 1
 {
+
 	gui, 2:Font, w700 Q3 ; Bold
 	gui, 2:Add, Text,, Permanent Effects Active`:
 	gui, 2:Font, w400 Q3 ; Normal
-	gui, 2:Add, Text,h0 w0 Y+5,
+	gui, 2:Add, Text, h0 w0 Y+5,
 	For Index, PermanentEffectName in PermanentEffectsActiveArray
 		gui, 2:Add, Text, Y+5, %PermanentEffectName%`%
-	gui, 2:Add, Text,h0 w0 Y+5,
+	gui, 2:Add, Text, h0 w0 Y+5,
 }
 if TimedEffectsEnabled = 1 
 {

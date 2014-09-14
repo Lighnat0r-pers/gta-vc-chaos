@@ -1,0 +1,27 @@
+Description of CPlayerPed::PlayerControl1stPeronRunAround(CPad *)
+
+Game gets rotation
+
+Game gets Left/Right and Up/Down both in analog range (-127 to 128)
+
+Gets multiplied by several constants (0x00694B14, 0x00694B18) to calculate speed+acceleration.
+
+Gets checked if the value is 0.0
+
+Checks and if true does jumping stuff.
+
+Checks anwering phone and return if true.
+
+Check weapon and if it allows sprinting.
+
+Check if sprinting key pressed.
+
+Check in melee stance.
+
+if not, call the movement function.
+
+check weapon again.
+
+Check jump key again. If jumping, clear the melee stance and get out of there (reset camera for target mode).
+
+Check for and possibly do evasive dive

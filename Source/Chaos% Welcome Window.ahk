@@ -116,28 +116,43 @@ goto MainScript
 ; The limit depends on the setting chosen in the welcome window.
 ; Optionally, a debug setting can override the difficulty limit.
 SetDifficultyLimit:
-if DifficultySetting = 1 ; Easy
+if (DifficultySetting = 1) ; Easy
+{
 	DifficultyLimit = 4
-if DifficultySetting = 2 ; Medium
+	DifficultySetting := "Easy"
+}
+else if (DifficultySetting = 2) ; Medium
+{
 	DifficultyLimit = 7
-if DifficultySetting = 3 ; Hard
+	DifficultySetting := "Medium"
+}
+else if (DifficultySetting = 3) ; Hard
+{
 	DifficultyLimit = 10
+	DifficultySetting := "Hard"
+}
+else ; just in case
+{
+	DifficultyLimit = 10
+	DifficultySetting := "Error"
+}
 if DebugDifficultyLimitEnabled = 1
 	DifficultyLimit := DebugDifficultyLimit
 return
 
 ; Based on the seed, determine which permanent effects should be activated.
 DecodeSeed:
+; Check what the difficulty limit is.
+gosub SetDifficultyLimit
 ; Make a special case of seed 0000, which doesn't activate any permanent effects.
 if Seed = 0
 	return
-; Check what the difficulty limit is, set some variables that are used later, initialize
-; the temporary arrays that will be changed later. The RequiredEffect variable determines
-; which effect is chosen and is calculated by performing an arbitrary mathematical operation on the seed.
-gosub SetDifficultyLimit
+; Set some variables that are used later, initialize the temporary arrays that will be changed later. 
+; The RequiredEffect variable determines which effect is chosen and is calculated by performing an
+; arbitrary mathematical operation on the seed.
 PermanentEffectsEnabled = 1
 DifficultySum = 0
-RequiredEffect := Round(((Seed*7/9)-53+Seed)*11+13)
+RequiredEffect := Abs(Floor(((((Tan(Sin(Abs((((CurrentVersion+2)*Seed+5426)/19-(114+Seed))*3)+34*PermanentEffectsAvailable+3)+37)+348)*DifficultyLimit*2)+(13*SeedValidLength))+160)/6-RefreshRate*43+StandardTimeBetweenEffects*StandardTimeBetweenEffects))
 TempPermanentEffectsArray := PermanentEffectsArray.Clone()
 TempPermanentCategoriesArray := PermanentCategoriesArray.Clone()
 TempPermanentDifficultiesArray := PermanentDifficultiesArray.Clone()
@@ -168,7 +183,7 @@ loop
 	}
 	else
 		Temp2PermanentDifficultiesArray[RequiredEffect] := PermanentEffectDifficulty - 3
-	RequiredEffect := RequiredEffect + Round(((Seed*27/6)+23-Seed)*132-577)
+	RequiredEffect := RequiredEffect + Round(Abs(Floor(((((Tan(Sin(Abs((((CurrentVersion+2)*Seed+5426)/19-(114+Seed))*3)+34*PermanentEffectsAvailable+3)+37)+348)*DifficultyLimit*2)+(13*SeedValidLength))+160)/6-RefreshRate*43+StandardTimeBetweenEffects*StandardTimeBetweenEffects)))
 }
 return
 
@@ -193,5 +208,26 @@ Loop %IndicesToBeRemovedArray0%
 	TempPermanentCategoriesArray.Remove(Index)
 	TempPermanentDifficultiesArray.Remove(Index)
 	Temp2PermanentDifficultiesArray.Remove(Index)
+}
+; Also remove the effects in the same category from the timed effects since we
+; don't want to have a permanent and timed effect of the same category active
+; at the same time. The effects can't be removed inside the For loop because
+; that would screw up the index count.
+IndicesToBeRemoved = 
+For Index, Category in TimedEffectsArray
+{
+	If (PermanentEffectCategory = Category)
+		IndicesToBeRemoved := Index . "." . IndicesToBeRemoved
+}
+StringSplit, IndicesToBeRemovedArray, IndicesToBeRemoved, `.
+IndicesToBeRemovedArray0 -= 1 ; To account for the empty part which is created the first time an index is added because IndicesToBeRemoved is empty at that point.
+; We need to go from high to low in the indices we will remove, because
+; otherwise we'd move items we want to remove and remove something else instead.
+Loop %IndicesToBeRemovedArray0%
+{
+	Index := IndicesToBeRemovedArray%A_Index%
+	TimedEffectsArray.Remove(Index)
+	TimedCategoriesArray.Remove(Index)
+	TimedDifficultiesArray.Remove(Index)
 }
 return

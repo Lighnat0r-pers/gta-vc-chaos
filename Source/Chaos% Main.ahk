@@ -56,7 +56,7 @@ If (IsLabel("DebugFunctions") AND A_IsCompiled != 1)
 	gosub DebugFunctions
 ; Configure the auto updater. The auto updater only triggers if the program is compiled, otherwise 
 ; the program will go to the create arrays subroutine immediately, skipping the auto updater.
-CurrentVersion = 1.12
+CurrentVersion = 1.2
 VersionURL := "http://pastebin.com/download.php?i=pc9QbQCK"
 ProgramName = Chaos
 gosub FileList
@@ -75,6 +75,7 @@ Includes:
 #Include Chaos% Quicksave.ahk
 #Include Chaos% Static Effects.ahk
 #Include Chaos% Timed Effects.ahk
+#Include Chaos% Timed Effects Limitations.ahk
 #Include Chaos% Update Checker.ahk
 #Include Chaos% Welcome Window.ahk
 return
@@ -106,9 +107,14 @@ return
 ; List of names of the files the auto updater should download.
 FileList:
 File1 := "newversionGTA VC Chaos%.exe"
-File2 := "GTA VC Chaos% Source.ahk"
-File3 := "GTA VC Chaos% Readme.txt"
+File2 := "GTA VC Chaos% Readme.txt"
 ExecutableFile := File1
+
+; Old versions included the source in one file. These days it's not included but on the GitHub,
+; so when updating we check if the old file exists and if so delete it.
+FileName := "GTA VC Chaos% Source.ahk"
+If FileExist(FileName)
+	FileDelete, %FileName%
 return
 
 ; First define which file from the file list is the readme, then test if it exists
@@ -211,6 +217,19 @@ PlayerControllableOffset := 0x63D
 VehicleTypeOffset := 0x29C
 CarPointer := 0x007E49C0+VersionOffset
 OnMissionAddress := 0x00821764+VersionOffset
+If VersionOffset = -4088 ; Steam
+	TimeHoursAddress := 0x00A0FB75
+Else if VersionOffset = 8 ; V1.1
+	TimeHoursAddress := 0x00A10B74
+else
+	TimeHoursAddress := 0x00A10B6B
+If VersionOffset = -4088 ; Steam
+	TimeMinutesAddress := 0x00A0FB9C
+Else if VersionOffset = 8 ; V1.1
+	TimeMinutesAddress := 0x00A10B92
+else
+	TimeMinutesAddress := 0x00A10B9B
+
 Guicontrol,2:,TimedEffectText,
 SetTimer, UpdateVariableAddresses, %RefreshRate%
 SetTimer, CheckGameRunning, %RefreshRate%
@@ -240,21 +259,21 @@ If GameStatus = 1 ; Game not running.
 	SetTimer, CheckGameRunning, Off
 	If StaticEffectsEnabled = 1
 	{
-		gosub StaticEffectsMain
 		SetTimer, StaticEffectsMain, Off
+		gosub StaticEffectsMain
 	}
 	If PermanentEffectsEnabled = 1
 	{
-		gosub PermanentEffectsMain
 		SetTimer, PermanentEffectsMain, Off
+		gosub PermanentEffectsMain
 	}
 	If TimedEffectsEnabled = 1
 	{
-		gosub TimedEffectsMain
 		SetTimer, TimedEffectsMain, Off
+		gosub TimedEffectsMain
 	}
-	gosub ChaosTextMain
 	SetTimer, ChaosTextMain, Off
+	gosub ChaosTextMain
 	Hotkey, F5, Quicksave, Off
 	gosub StopLogger
 	If QuicksaveUsed = 1
@@ -434,43 +453,12 @@ SkipTimedEffect = 0
 outputdebug %CurrentTime% %TimedEffectName% Skipped
 return
 
-CheckGameStatus()
-; Do various checks to see if the game is ready for the effects to be active.
-; Various states are reported with separate values to differentiate between them.
-; Note that if multiple checks are true, only the first is reported.
-{
-	global
-	InMenuAddress := 0x00A10B36+VersionOffset ; 1 Byte
-	if VersionOffset = -4088 ; Steam version
-		StillToFadeOutAddress := 0x00A0FB5F ; 1 Byte
-	else
-		StillToFadeOutAddress := 0x00A10B56+VersionOffset ; 1 Byte
-;	StillToFadeOutAddress := 0x00A10B56+VersionOffset
-	LoadingGameCheckAddress := 0x00974B74+VersionOffset ; 0 if loading a game or changing resolution, 1 otherwise. (DWord)
-;	ShuttingDownCheckAddress := 0x006DB8E8 ; 0 if shutting down stuff for restart or quit. Also 0 during initialise. (1 Byte)
-	If (Memory(3, GameRunningAddress, 1) = "Fail")
-		return 1
-	If Memory(3, InTheBeginningDoneAddress, 4) != 1 ; Check if the player isn't loading a game.
-		return 5
-	If Memory(3, LoadingGameCheckAddress, 4) = 0
-		return 3
-	If Memory(3, StillToFadeOutAddress, 1) = 1
-		return 4
-;	If Memory(3, ShuttingDownCheckAddress, 1) = 0
-;		return 6
-	If Memory(3, InMenuAddress, 1) = 1
-		return 2
-	PlayerControllableAddress := Memory(5, PlayerPointer, PlayerControllableOffset)
-	If Memory(3, PlayerControllableAddress, 1) = 0
-		return 7
-	return 0
-}
 
 PermanentEffectsMain:
 GameStatus := CheckGameStatus() ; 0 for ready, other values for not ready.
 ; If the game is not ready, check if the permanent effects are active.
 ; If they are active deactivate them, otherwise do nothing.
-if (GameStatus != 0 AND GameStatus != 7)
+if (GameStatus != 0)
 {
 	If PermanentEffectsActive = 1
 		Gosub PermanentEffectsDeactivate
@@ -530,6 +518,7 @@ For Index, PermanentEffectName in PermanentEffectsActiveArray
 }
 return
 
+
 StaticEffectsMain:
 GameStatus := CheckGameStatus() ; 0 for ready, other values for not ready.
 ; If the game is not ready, check if the static effects are active.
@@ -555,7 +544,7 @@ Else
 }
 return
 
-; Loop through all permanent effects and activate them if they should be and haven't already.
+; Loop through all static effects and activate them if they should be and haven't already.
 StaticEffectsActivate:
 For Index, StaticEffectName in StaticEffectsArray
 {
@@ -567,7 +556,7 @@ For Index, StaticEffectName in StaticEffectsArray
 StaticEffectsActive = 1
 return
 
-; Loop through all permanent effects and deactivate them if they are active.
+; Loop through all static effects and deactivate them if they are active.
 StaticEffectsDeactivate:
 For Index, StaticEffectName in StaticEffectsArray
 {
@@ -579,7 +568,7 @@ For Index, StaticEffectName in StaticEffectsArray
 StaticEffectsActive = 0
 return
 
-; Loop through all permanent effects and update them. If an effect needs to
+; Loop through all static effects and update them. If an effect needs to
 ; be updated at a slower rate, it can be timed out it the update loop and it
 ; will skip the update until the timeout is finished.
 StaticEffectsUpdate:
@@ -639,6 +628,7 @@ ChaosTextAdded = 0
 outputdebug %CurrentTime% Chaos Text Removed
 return
 
+
 ; Some often-used addresses depending on pointers are updated here to avoid having to do that
 ; every time they are needed in the code. Only update the variables if the game is ready.
 UpdateVariableAddresses:
@@ -649,6 +639,39 @@ If (GameStatus = 0 OR GameStatus = 7)
 	VehicleTypeAddress := Memory(5, CarPointer, VehicleTypeOffset)
 }
 return
+
+CheckGameStatus()
+; Do various checks to see if the game is ready for the effects to be active.
+; Various states are reported with separate values to differentiate between them.
+; Note that if multiple checks are true, only the first is reported.
+{
+	global
+	InMenuAddress := 0x00A10B36+VersionOffset ; 1 Byte
+	if VersionOffset = -4088 ; Steam version
+		StillToFadeOutAddress := 0x00A0FB5F ; 1 Byte
+	else if VersionOffset = 8
+		StillToFadeOutAddress := 0x00A10B5F ; 1 Byte
+	else
+		StillToFadeOutAddress := 0x00A10B56 ; 1 Byte
+	LoadingGameCheckAddress := 0x00974B74+VersionOffset ; 0 if loading a game or changing resolution, 1 otherwise. (DWord)
+;	ShuttingDownCheckAddress := 0x006DB8E8 ; 0 if shutting down stuff for restart or quit. Also 0 during initialise. (1 Byte)
+	If (Memory(3, GameRunningAddress, 1) = "Fail")
+		return 1
+	If Memory(3, InTheBeginningDoneAddress, 4) != 1 ; Check if the player isn't loading a game.
+		return 5
+	If Memory(3, LoadingGameCheckAddress, 4) = 0
+		return 3
+	If Memory(3, StillToFadeOutAddress, 1) = 1
+		return 4
+;	If Memory(3, ShuttingDownCheckAddress, 1) = 0
+;		return 6
+	If Memory(3, InMenuAddress, 1) = 1
+		return 2
+	PlayerControllableAddress := Memory(5, PlayerPointer, PlayerControllableOffset)
+	If Memory(3, PlayerControllableAddress, 1) = 0
+		return 7
+	return 0
+}
 
 GetPseudoRandomValueUpTo(int)
 {
